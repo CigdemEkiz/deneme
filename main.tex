@@ -1,16 +1,567 @@
 \documentclass{article}
-\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{lipsum}
+\usepackage{float}
 
-\title{deneme}
-\author{ekizcigdemekiz }
-\date{April 2025}
+\geometry{a4paper, margin=1.5cm}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{noitemsep, topsep=0pt}
+
+\title{World Bank CBAM Descriptive Statistics Report}
+\author{Çiğdem Ekiz \\ World Bank Research Team}
+\date{March 27, 2025}
 
 \begin{document}
 
 \maketitle
 
-\section{Introduction}
+\section*{Definition (i)}
+This report analyzes firms for the group using the 10\% export threshold, we consider any firm that has exported at least once between 2013 and 2023. We show descriptions of 7 main groups and 3 sub-groups. Here are the explanation of each groups.
 
-\input{wb_report}  % veya \include{wb_report}
+\subsection*{Main Groups}
+\begin{itemize}
+    \item \textbf{1.CBAM EU DUM:} This group consists of firms that export CBAM products to the EU, identified by their HS codes. A firm that exports a CBAM product to the EU and the volume amounts to at least 10\% of its sales in one of the years covered in the time series.
+    \item \textbf{2.NON-CBAM EU DUM:} This group consists of firms that export non-CBAM products to the EU, identified by their HS codes. A firm that exports at least 10\% of its sales to the EU in one of the years covered in the time series. Firms that are included in the CBAM group should not be included here.
+    \item \textbf{3.CBAM NON-EU DUM:} This group consists of firms that export CBAM products to the non-EU, identified by their HS codes. A firm that exports a CBAM product to markets other than the EU and the volume amounts to at least 10\% of its sales in one of the years covered in the time series. If the firm has ever exported more then 10\% of its sales to the EU, we do not include them here.
+    \item \textbf{4.NON-CBAM NON-EU DUM:} This group consists of firms that export non-CBAM products to the non-EU, identified by their HS codes. Firms export at least 10\% of their sales in one year of the time series. They export, but neither trade a CBAM product, nor exported more than 10\% to the EU in any given year.
+    \item \textbf{5.CBAM DOMESTIC DUM:} This group consists of firms that domestic firms in CBAM industries, identified by their NACE codes. Firms that never export more than 10\% of their sales, but operate in CBAM-related industries.
+    \item \textbf{6.NON-CBAM DOMESTIC DUM:} This group consists of firms that domestic firms in non-CBAM industries, identified by their NACE codes. Firms that never export more than 10\% of their sales, and not operate in CBAM-related industries.
+    \item \textbf{7.WHOLESALERS  DOMESTIC DUM:} This group consists of firms that domestic wholesaler firms identified by their NACE codes. Firms that never export more than 10\% of their sales.
+\end{itemize}
+
+\subsection*{Sub-groups}
+\begin{itemize}
+    \item \textbf{8.Exporters that are intermediaries:} This group consists of exporter firms that are wholesaler (4XX - 450 >= nace3 < 480), identified by their NACE codes. We use the same criteria as above, just split groups (1)-(4) into subgroup. Accordingly there are four different groups of exporting intermediaries.
+    \item \textbf{9.Exporters that are producers:} This group consists of exporter firms that are producers (4XX - 200 >= nace3 < 300), identified by their NACE codes. We use the same criteria as above, just split groups (1)-(4) into subgroup. Accordingly, there are four different groups of exporting producers.
+    \item \textbf{10.Indirect exporters:} This group consists of indirect exporter firms that are producers, identified by their NACE codes. 10\% of their sales went to a wholesaler tagged in one of the exporting groups (1)-(4). Accordingly, there are four different groups of indirect exporters.
+\end{itemize}
+
+We present descriptive statistics for these groups, focusing on their size, profitability, network, trade, and other characteristics.
+
+\section*{Definition (ii)}
+This report analyzes firms for the group using the 10\% export threshold, we consider firms based on their export status in 2021 or 2022. I share the descriptions of them in another document.
+
+\section*{Definition (iii)}
+This report analyzes firms for the group using the 10\% export threshold, we consider any firm that has always exported between 2013 and 2023. I share the descriptions of them in another document.
+
+\section{Number of Observation}
+
+\begin{table}[h]
+    \centering
+    \caption{Number of Firm Observations by Year}
+    \begin{tabular}{lrrrrr}
+        \toprule
+        Year & All Firms & Balance Sheet & Exporters & Firms Have Buyers & Firms Have Sellers \\
+        \midrule
+        2013 & 3,062,638 & 1,029,436 & 59,894 & 627,578 & 627,578 \\
+        2014 & 2,984,805 & 1,087,111 & 62,842 & 676,794 & 676,794 \\
+        2015 & 3,104,895 & 1,147,615 & 64,117 & 731,189 & 731,189 \\
+        2016 & 3,126,983 & 1,195,372 & 66,075 & 776,683 & 776,683 \\
+        2017 & 3,341,442 & 1,262,769 & 61,499 & 848,367 & 848,367 \\
+        2018 & 3,398,788 & 1,342,490 & 66,596 & 896,534 & 896,534 \\
+        2019 & 3,496,284 & 1,370,691 & 84,290 & 978,999 & 978,999 \\
+        2020 & 3,765,986 & 1,503,045 & 76,116 & 996,512 & 996,512 \\
+        2021 & 3,409,479 & 1,477,363 & 91,715 & 1,132,320 & 1,132,320 \\
+        2022 & 3,750,047 & 1,705,817 & 106,588 & - & - \\
+        2023 & 3,280,799 & 1,624,782 & 102,516 & - & - \\
+        \midrule
+        \textbf{Total} & \textbf{36,722,146} & \textbf{14,746,491} & \textbf{842,248} & \textbf{7,664,976} & \textbf{7,664,976} \\
+        \bottomrule
+    \end{tabular}
+    
+    \label{tab:firm_stats}
+\end{table}
+
+\subsection{Main Group}
+\input{table_main.tex}
+
+\section*{Sub-groups}
+\subsection{Exporters that are intermediaries}
+\input{table_ei.tex}
+
+\begin{table}[H]
+\subsection{Exporters that are producers}
+\input{table_ep.tex}
+
+\subsection{Indirect exporters}
+\input{table_indir.tex}
+\end{table}
+
+\section{Firm Size}
+
+\subsection{Sales}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{salesnet_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{salesnet_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{salesnet_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{salesnet_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\subsection{Employment}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{employee_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{employee_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{employee_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{employee_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\section{Profitability}
+\subsection{Gross Profit}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{profit_gross_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{profit_gross_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{profit_gross_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{profit_gross_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\section{Network}
+\subsection{Number of Buyer}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{bnum_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{bnum_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{bnum_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{bnum_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\subsection{Number of Seller}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{snum_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{snum_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{snum_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{snum_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\subsection{Share of Sales Within the Network}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{share_sales_within_network_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{share_sales_within_network_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{share_sales_within_network_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{share_sales_within_network_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\section{Trade}
+\subsection{Number of Quantity Exported}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{totxq_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{totxq_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{totxq_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{totxq_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\subsection{Export / Net Sales}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{totx_salesnet_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{totx_salesnet_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{totx_salesnet_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{totx_salesnet_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\subsection{Export to EU / Net Sales}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{totx_eu_salesnet_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{totx_eu_salesnet_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{totx_eu_salesnet_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{totx_eu_salesnet_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\subsection{Export to EU / Total Export}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{totx_eu_totx_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{totx_eu_totx_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{totx_eu_totx_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{totx_eu_totx_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\subsection{Gross Export/ Gross Net Sales}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{gross_all.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{gross_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{gross_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{gross_in.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\subsection{Import/ Net Sales}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{totm_salesnet_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{totm_salesnet_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{totm_salesnet_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{totm_salesnet_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\section{Other Characteristics}
+\subsection{share of sales from energy providers - direct (nace2= 5 or 6) (51 Hard coal / 52 lignite / 61 Petroleum / 62 natural gas)}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{dir_energy_share_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{dir_energy_share_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{dir_energy_share_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{dir_energy_share_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\subsection{share of sales from energy providers - indirect (nace2=35 Electricity, Gas, Steam)  (3511 Electricity / 3521 Gas / 3530 Steam)}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{indir_energy_share_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{indir_energy_share_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{indir_energy_share_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{indir_energy_share_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\section{Export Shares - Main Groups}
+\subsection{Export Shares of CBAM/non-CBAM products to net sales (Export/Net Sales)}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{cbam_eu_share_group(i).png}
+\caption{\textbf{Percentiles of CBAM EU Exporter Firms}}
+\includegraphics[width=0.95\textwidth]{non_cbam_eu_share_group(i).png}
+\caption{\textbf{Percentiles of non-CBAM EU Exporter Firms}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{cbam_non_eu_share_group(i).png}
+\caption{\textbf{Percentiles of CBAM non-EU Exporter Firms}}
+\includegraphics[width=0.95\textwidth]{non_cbam_non_eu_share_group(i).png}
+\caption{\textbf{Percentiles of non-CBAM non-EU Exporter Firms}}
+\end{figure}
+
+\section{Sankey Chart}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{sankey_cbam_to_nace.png}
+\caption{\textbf{}}
+\end{figure}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{NACE Code} & \textbf{Sector Description} \\
+        \midrule
+        20 & Manufacture of chemicals and chemical products \\
+        21 & Manufacture of basic pharmaceutical products and pharmaceutical preparations \\
+        22 & Manufacture of rubber and plastic products \\
+        23 & Manufacture of other non-metallic mineral products \\
+        24 & Manufacture of basic metals \\
+        25 & Manufacture of fabricated metal products, except machinery and equipment \\
+        26 & Manufacture of computer, electronic and optical products \\
+        27 & Manufacture of electrical equipment \\
+        28 & Manufacture of machinery and equipment n.e.c. \\
+        29 & Manufacture of motor vehicles, trailers and semi-trailers \\
+        \bottomrule
+    \end{tabular}
+    \caption{NACE Rev.2 Classification for Codes 20-29}
+    \label{tab:nace20_29}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section*{APPENDIX}
+\section*{Additional Descriptives}
+\section{Firm Size}
+\subsection{Cost of Sales}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{cogs_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{cogs_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{cogs_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{cogs_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\subsection{Fixed assets/capital stock}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{ass_cap_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{ass_cap_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{ass_cap_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{ass_cap_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\section{Profitability}
+\subsection{Accounting Markup}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{acc_markup_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{acc_markup_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{acc_markup_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{acc_markup_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\subsection{Profit Rate}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{profit_rate_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{profit_rate_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{profit_rate_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{profit_rate_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\section{Network}
+\subsection{Number of 4-digit Sectors the Firm Buys From Domestically}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{bnum_nace4_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{bnum_nace4_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{bnum_nace4_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{bnum_nace4_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\subsection{Number of 4-digit Sectors the Firm Sells From Domestically}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{snum_nace4_main_groups.png}
+\caption{\textbf{The main groups}}
+\includegraphics[width=0.95\textwidth]{snum_nace4_ei.png}
+\caption{\textbf{Exporters that are intermediaries}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{snum_nace4_ep.png}
+\caption{\textbf{Exporters that are producers}}
+\includegraphics[width=0.95\textwidth]{snum_nace4_indir.png}
+\caption{\textbf{Indirect exporters}}
+\end{figure}
+
+\section{Export Shares - Sub-groups}
+\subsection{Exporters that are intermediaries - Export Shares of CBAM/non-CBAM products to net sales (Export/Net Sales)}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{ei_cbam_eu_share_group(i).png}
+\caption{\textbf{Percentiles of CBAM EU Exporter Firms}}
+\includegraphics[width=0.95\textwidth]{ei_non_cbam_eu_share_group(i).png}
+\caption{\textbf{Percentiles of non-CBAM EU Exporter Firms}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{ei_cbam_non_eu_share_group(i).png}
+\caption{\textbf{Percentiles of CBAM non-EU Exporter Firms}}
+\includegraphics[width=0.95\textwidth]{ei_non_cbam_non_eu_share_group(i).png}
+\caption{\textbf{Percentiles of non-CBAM non-EU Exporter Firms}}
+\end{figure}
+
+\subsection{Exporters that are producers - Export Shares of CBAM/non-CBAM products to net sales (Export/Net Sales)}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{ep_cbam_eu_share_group(i).png}
+\caption{\textbf{Percentiles of CBAM EU Exporter Firms}}
+\includegraphics[width=0.95\textwidth]{ep_non_cbam_eu_share_group(i).png}
+\caption{\textbf{Percentiles of non-CBAM EU Exporter Firms}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{ep_cbam_non_eu_share_group(i).png}
+\caption{\textbf{Percentiles of CBAM non-EU Exporter Firms}}
+\includegraphics[width=0.95\textwidth]{ep_non_cbam_non_eu_share_group(i).png}
+\caption{\textbf{Percentiles of non-CBAM non-EU Exporter Firms}}
+\end{figure}
+
+\subsection{Indirect exporters - Export Shares of CBAM/non-CBAM products to net sales (Export/Net Sales)}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{indir_cbam_eu_share_group(i).png}
+\caption{\textbf{Percentiles of CBAM EU Exporter Firms}}
+\includegraphics[width=0.95\textwidth]{indir_non_cbam_eu_share_group(i).png}
+\caption{\textbf{Percentiles of non-CBAM EU Exporter Firms}}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{indir_cbam_non_eu_share_group(i).png}
+\caption{\textbf{Percentiles of CBAM non-EU Exporter Firms}}
+\includegraphics[width=0.95\textwidth]{indir_non_cbam_non_eu_share_group(i).png}
+\caption{\textbf{Percentiles of non-CBAM non-EU Exporter Firms}}
+\end{figure}
+
 
 \end{document}
